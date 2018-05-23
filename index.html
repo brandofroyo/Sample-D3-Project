@@ -1,0 +1,81 @@
+<!doctype html>
+<html>
+<head>
+    <meta http-equiv="Content-type" content="text/html; charset=utf-8"/>
+    <script src="https://d3js.org/d3.v4.min.js"></script>
+    <style>
+        .domclass{
+            color:'red'
+        }
+
+ /* the dropdown button */
+.button {
+    background-color: #FFA500;
+    color: white;
+    padding: 7px;
+    font-size: 14px;
+    border: none;
+}
+
+/* positions dropdown content */
+.dropdown {
+    position: relative;
+    display: inline-block;
+}
+
+/* the dropdown content */
+.drop-content {
+    display: none;
+    position: absolute;
+    background-color: #f1f1f1;
+    min-width: 160px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 1;
+}
+
+/* dropdown links */
+.drop-content a {
+    color: black;
+    padding: 7px 7px;
+    text-decoration: none;
+    display: block;
+}
+
+/* dropdown link colour (hovered)*/
+.drop-content a:hover {background-color: #FF7F50}
+
+/* dropdown menu display */
+.dropdown:hover .drop-content {
+    display: block;
+}
+
+/* dropdown button colour */
+.dropdown:hover .button {
+    background-color: #FFD700;
+} 
+
+    </style>
+</head>
+
+<body>
+
+
+ <div class="dropdown">
+  <button class="button">MENU</button>
+  <div class="drop-content">
+    <a href="#">Grid</a>
+    <a href="#">Network</a>
+    <a href="#">Radial</a>
+  </div>
+</div> 
+
+    <p class="domclass ">DOM 1</p>
+    <p class="domclass ">DOM 2</p>
+
+    <script>
+        d3.selectAll(".domclass ").style('color','orange');
+    </script>
+
+    <script src="main.js" type="text/javascript"></script>
+</body>
+</html>
