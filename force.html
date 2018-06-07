@@ -2,6 +2,7 @@
   <head>
     <style>
       .node circle {
+        fill: blue;
         stroke: #ad00df;
         stroke-width: .5px;
       }
@@ -30,25 +31,26 @@
       if (error) throw error;
 
       // i dont get this: sort the nodes so that the bigger ones are at the back
-      graph = graph.sort(function(a,b){ return b.size - a.size; });
+      // graph = graph.sort(function(a,b){return b.size - a.size; });
 
       //update the simulation based on the data. dont really understand this
       simulation
           .nodes(graph)
-          .force("collide", d3.forceCollide().strength(.5).radius(function(d){ return d.radius + nodePadding; }).iterations(1))
+          .force("collide", d3.forceCollide().strength(.5).radius(function(d){ return d.radius; + nodePadding; }).iterations(1))
           .on("tick", function(d){
             node
                 .attr("cx", function(d){ return d.x; })
                 .attr("cy", function(d){ return d.y; })
           });
 
+      console.log(graph[0])
       var node = svg.append("g")
           .attr("class", "node")
         .selectAll("circle")
         .data(graph)
         .enter().append("circle")
-          .attr("r", function(d) { return d.radius; })
-          .attr("fill", function(d) { return color(d.continent); })
+          .attr("r", function(d) { return 5; })
+          // .attr("fill", function(d) { return color(d.continent); })
           .attr("cx", function(d){ return d.x; })
           .attr("cy", function(d){ return d.y; })
           .call(d3.drag()
