@@ -1,0 +1,76 @@
+<html>
+  <head>
+    <style>
+      .node circle {
+        fill: red;
+        stroke: #3a403d;
+        stroke-width: .5px;
+      }
+    </style>
+  </head>
+  <body>
+    <script src="https://d3js.org/d3.v4.min.js"></script>
+    <script>
+    //dimensions specs
+    var width = window.innerWidth, height = window.innerHeight, sizeDivisor = 100, nodePadding = 2.5;
+
+//the svg that we draw in
+    var svg = d3.select("body")
+        .append("svg")
+        .attr("width", width)
+        .attr("height", height);
+
+//uses an ordinal scale as the data is categorical
+    var color = d3.scaleOrdinal([]);
+
+//the physics of the force simulation (x- and y-axises, the simulated centre of gravity, 
+//and the simulated charge/repulsion of the nodes)
+    var simulation = d3.forceSimulation()
+        .force("x-axis", d3.forceX().strength(.1).x(width * .5))
+        .force("y-axis", d3.forceY().strength(.1).y(height * .5))
+        .force("centergravity", d3.forceCenter().x(width * .5).y(height * .5))
+        .force("charge", d3.forceManyBody().strength(-45));
+
+//throws an error if there is an invalid CSV
+    d3.csv("papers.csv", topicgroups, function(error,graph){
+      if (error) throw error;
+
+      // sort the nodes so that the bigger ones are at the back
+      graph = graph.sort(function(a,b){ return b.size - a.size; });
+
+      //still stuck on how to get the simulation working 
+      //chose Topics and Topic Groups as x- and y-axis    
+      var simulFunc = function() {
+            node
+                .attr("Topics", function(d) { return d.x; })
+                .attr("Topic Groups", function(d) { return d.y; });
+        }  
+        
+        simulation
+            .nodes(data.node)
+            //i've seen this .on method used repearedly for these simulations.
+            //a google search tells me this is used for "event handling"
+            .on("simulated", simulFunc);          
+    });
+
+//all dragging functions here
+    function dragstarted(d) {
+      if (!d3.event.active) simulation.alphaTarget(.03).restart();
+      d.fx = d.x;
+      d.fy = d.y;
+    }
+
+    function dragged(d) {
+      d.fx = d3.event.x;
+      d.fy = d3.event.y;
+    }
+
+    function dragended(d) {
+      if (!d3.event.active) simulation.alphaTarget(.03);
+      d.fx = null;
+      d.fy = null;
+    }
+
+    </script>
+  </body>
+</html>
