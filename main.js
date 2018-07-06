@@ -72,6 +72,14 @@ function gridData() {
   return data;
 }
 
+dropdown.getElementById("Radial").onclick = function() {radialFunction()};
+
+function radialFunction(){
+	svg.selectAll("Network").remove();
+
+	d3.select("body").append("svg").attr("width", 40).attr("height", 40).append("circle").attr("cx", 40).attr("cy", 40).attr("r", 40).style("fill", "orange");
+}
+
 var gridData = gridData();  
 // I like to log the data to the console for quick debugging
 // console.log(gridData[1]);
